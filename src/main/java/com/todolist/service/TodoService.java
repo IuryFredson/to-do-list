@@ -12,6 +12,7 @@ import java.util.Optional;
 
 @Service
 public class TodoService {
+
     @Autowired
     private TodoRepository todoRepository;
 
@@ -28,7 +29,19 @@ public class TodoService {
     }
 
     public Todo createTodo(Todo todo) {
+        todo.setCompleted(false);
         return todoRepository.save(todo);
+    }
+
+
+    public Todo updateTodo(String id, Todo todo) {
+        Optional<Todo> existingTodo = todoRepository.findById(id);
+        if (existingTodo.isPresent()) {
+            todo.setId(id);
+            return todoRepository.save(todo);
+        } else {
+            throw new RuntimeException("Task not found with ID: " + id);
+        }
     }
 
     public void deleteTodo(String id) {

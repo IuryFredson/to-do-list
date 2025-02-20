@@ -5,6 +5,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+import java.util.Date;
+
 @Document(collection = "todos")
 public class Todo {
     @Id
@@ -19,15 +21,19 @@ public class Todo {
 
     private boolean completed;
 
-    public Todo(String title, String description) {
+    private Date dueDate;
+    private String priority;
+
+    public Todo(String title, String description, Date dueDate, String priority) {
         this.title = title;
         this.description = description;
+        this.dueDate = dueDate;
+        this.priority = priority;
         this.completed = false;
     }
 
     public Todo() {}
 
-    // Getters e Setters
     public String getId() {
         return id;
     }
@@ -58,5 +64,21 @@ public class Todo {
 
     public void setCompleted(boolean completed) {
         this.completed = completed;
+    }
+
+    public Date getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(Date dueDate) {
+        this.dueDate = dueDate;
+    }
+
+    public String getPriority() {
+        return priority;
+    }
+
+    public void setPriority(String priority) {
+        this.priority = priority;
     }
 }
